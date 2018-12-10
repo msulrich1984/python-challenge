@@ -12,6 +12,8 @@ with open (budget_csv,newline='') as budgetcsv:
     data=list(reader)
     rowcount=len(data)
     values=csv.reader(budgetcsv,delimiter=',')
+#    total=sum(float(row[2]) for row in values)
+#    print (total)
 #The total is just the sum, right?
 with open(budget_csv,newline="") as cash:
     reader = csv.DictReader(cash)
@@ -20,7 +22,6 @@ print('Financial Analysis')
 print('-------------------------------')
 print(f"Total months: {rowcount}")
 print(f"Total: ${total}")
-#temperature update, 101. I may need to call it a night.
 #lists to store data
 #date = []
 #change=[]
