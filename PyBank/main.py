@@ -4,50 +4,41 @@ import os
 import csv
 # Path to collect data from the Resources folder
 budget_csv = os.path.join('..','PyBank', 'Resources', 'budget_data.csv')
+#make empty lists
+Months=[]
+Profits=[]
+AvgChange=[]
+avgchangemost=[]
+avgchangeless=[]
+
 #obtain count of rows less header for number of records
 with open (budget_csv,newline='') as budgetcsv:
     reader = csv.reader(budgetcsv,delimiter=',')
 #skip the header
     csv_header=next(budgetcsv)    
-    data=list(reader)
-    rowcount=len(data)
-    values=csv.reader(budgetcsv,delimiter=',')
+    #data=list(reader)
+    #rowcount=len(data)
+    #rowcount=months
+#This will loop through reader and add to the months counter.
+    for row in reader:
+        Months.append(row[0])
 #The total is just the sum, right?
-with open(budget_csv,newline="") as cash:
-    reader = csv.DictReader(cash)
-    total = sum(float(row["Profit/Losses"]) for row in reader)    
+        Profits.append(float(row[1]))
+# AvgChange is the value of row - row above
+    for i in range(len(Profits)-1):
+        AvgChange.append(Profits[i+1]-Profits[i])
+#Greatest AvgChange is a max function
+    avgchangemost = max(AvgChange)
+#Greatest Negative AvgChange is also a function
+    avgchangeless = min(AvgChange)
+#a note: Since these are just going through the AvgChange list, it's only numbers. I'm not sure how to also print months.
+#least AvgChange
+    averageavgchange =int(sum(AvgChange)/len(AvgChange))
+#print the info!
 print('Financial Analysis')
 print('-------------------------------')
-print(f"Total months: {rowcount}")
-print(f"Total: ${total}")
-#temperature update, 101. I may need to call it a night.
-#lists to store data
-#date = []
-#change=[]
-#with open(budget_csv,newline="")as newcsv:
-#    newreader=csv.reader(newcsv, delimeter=",")
- #   for row in newreader:
-#        date.append(row[1])
-#        change.append(row[2])
-#cleaned_csv=zip(date,change)
-#output_file=(os.path.join("trial.txt"))
-#with open(output_file,"w",newline="") as datafile:
-#    writer = csv.writer(datafile)
-    #write the header row
-#    writer.writerow(["Date","Change"])
-#    writer.writerows(cleaned_csv)
-#dict_budget=csv.DictReader(budgetData,fieldnames="date","change")
-#print (dict_budget)
-#count rows
-#   data=list(budgetread)
- #   print (data)
-  #  rowcount=len(data)
-   # print(rowcount)
- #Financial Analysis
-  #----------------------------
-  #Total Months: 86
-  #Total: $38382578
-  #Average  Change: $-2315.12
-  #Greatest Increase in Profits: Feb-2012 ($1926159)
-  #Greatest Decrease in Profits: Sep-2013 ($-2196167)
-  #```
+print(f"Total months: "+str(len(Months)))
+print(f"Total: ${sum(Profits)}")
+print(f"Average Change: {averageavgchange}")
+print(f"Greatest Increase in profits: {avgchangemost}")
+print(f"Greatest Decrease in profits: {avgchangeless}")
